@@ -15,7 +15,7 @@ export const createCheckoutSession = async (req, res) => {
       return res.status(400).json({ message: "No items provided" });
     }
 
-    // 🔥 Fetch real product data from DB
+    
     const orderItems = [];
     let totalAmount = 0;
 
@@ -33,7 +33,7 @@ export const createCheckoutSession = async (req, res) => {
         title: product.title,
         price: product.price,
         quantity: quantity,
-        image: product.image,   // ✅ image taken from DB
+        image: product.image,   
       });
 
       totalAmount += product.price * quantity;
@@ -47,7 +47,7 @@ export const createCheckoutSession = async (req, res) => {
   });
 
   if (!order) {
-    // Create a new pending order if none exists
+    
     order = await Order.create({
       userId,
       items: orderItems,
@@ -56,7 +56,7 @@ export const createCheckoutSession = async (req, res) => {
       paymentStatus: "pending"
     });
   }
-    // ✅ Create Stripe session
+    
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -89,73 +89,6 @@ export const createCheckoutSession = async (req, res) => {
 };
 
 
-
-// export const stripeWebhook = async (req, res) => {
-
-
-
-//   const sig = req.headers["stripe-signature"];
-//   let event;
-
-//   try {
-//     event = stripe.webhooks.constructEvent(
-//       req.body,
-//       sig,
-//       process.env.STRIPE_WEBHOOK_SECRET
-//     );
-//   } catch (err) {
-//     console.log("Webhook signature error:", err.message);
-//     return res.status(400).json({ success: false, message: "Webhook error" });
-//   }
-
- 
-//   //  PAYMENT SUCCESS
-  
-//   if (event.type === "checkout.session.completed") {
-//     const session = event.data.object;
-//     const orderId = session.metadata.orderId;
-//     const order = await Order.findById(orderId);
-
-//     if (!order || order.paymentStatus === "success") {
-//       return res.status(200).json({ message: "Order already updated or not found" });
-//     }
-
-//     order.paymentStatus = "success";
-//     order.paymentIntentId = session.payment_intent;
-//     order.paidAt = new Date();
-//     await order.save();
-
-//     console.log("Payment success updated:", order._id);
-//   }
-
-
-//   //  PAYMENT FAILED
-
-//   if (event.type === "checkout.session.expired") {
-
-//     const session = event.data.object;
-//     const orderId = session.metadata.orderId;
-
-//     const order = await Order.findById(orderId);
-
-//     if (order && order.paymentStatus !== "failed") {
-
-//       order.paymentStatus = "failed";
-//       await order.save();
-
-//       await redis.hset(`order:${order._id}`, {
-//         paymentStatus: "failed"
-//       });
-
-//       await redis.expire(`order:${order._id}`, 3600);
-
-//       console.log(" Payment failed updated:", order._id);
-//     }
-//   }
-
-//   res.status(200).json({ received: true });
-// };
-
 export const stripeWebhook = async (req, res) => {
   const sig = req.headers["stripe-signature"];
   let event;
@@ -173,7 +106,7 @@ export const stripeWebhook = async (req, res) => {
     const order = await Order.findById(orderId);
     if (!order) return res.status(404).json({ message: "Order not found" });
 
-    // ✅ Update payment status
+    
     if (order.paymentStatus !== "success") {
       order.paymentStatus = "success";
       order.paymentIntentId = session.payment_intent;
