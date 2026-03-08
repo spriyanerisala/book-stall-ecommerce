@@ -23,6 +23,7 @@ const MyOrders = () => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/my-orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log("my orders url :", `${import.meta.env.VITE_API_URL}/api/orders/my-orders`);
       setOrders(res.data || []);
     } catch (err) {
       console.error("Error fetching orders:", err);
