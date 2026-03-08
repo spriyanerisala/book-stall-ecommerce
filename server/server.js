@@ -52,7 +52,7 @@ app.use('/api/cart',cartRouter);
 app.use('/api/payment',paymentRouter);
 app.use('/api/admin',adminRouter);
 
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.send("Book Stall Ecommerce API is working");
 });
 
