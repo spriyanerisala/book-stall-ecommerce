@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-// Component to display average stars dynamically
+
 const Star = ({ filled }) => (
   <span className={`text-yellow-400 text-xl`} style={{ color: filled ? "#FBBF24" : "#D1D5DB" }}>
     ★
@@ -36,12 +36,12 @@ const Comments = ({ productId }) => {
   const token = localStorage.getItem("token");
   const loggedUser = JSON.parse(localStorage.getItem("user"));
 
-  // Fetch comments and calculate average rating
+   const API_URL = import.meta.env.VITE_API_URL
+
   const fetchComments = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/api/comments/${productId}`);
+      const { data } = await axios.get(`${API_URL}/api/comments/${productId}`);
 
-      // Sort: user's comment first
       const sortedComments = data.comments.sort((a, b) => {
         if (a.userId?._id === loggedUser?._id) return -1;
         if (b.userId?._id === loggedUser?._id) return 1;
@@ -50,7 +50,7 @@ const Comments = ({ productId }) => {
 
       setComments(sortedComments);
 
-      // Calculate average rating from all comments with ratings
+      
       const ratings = data.comments
         .filter(c => c.rating && c.rating > 0)
         .map(c => c.rating);
@@ -71,7 +71,6 @@ const Comments = ({ productId }) => {
 
   const userComment = comments.find(c => c.userId?._id === loggedUser?._id);
 
-  // Add comment
   const addComment = async () => {
     if (!token) return alert("Login first");
     if (!text.trim()) return alert("Comment cannot be empty");
@@ -79,10 +78,11 @@ const Comments = ({ productId }) => {
 
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/comments/${productId}`,
+        `${API_URL}/api/comments/${productId}`,
         { text, rating: rating || undefined },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      console.log("comment data",data);
 
       setText("");
       setRating(0);
@@ -92,14 +92,14 @@ const Comments = ({ productId }) => {
     }
   };
 
-  // Update comment
+
   const updateComment = async (id, newText, newRating) => {
     if (!newText.trim()) return alert("Comment cannot be empty");
     if (newRating < 0 || newRating > 5) return alert("Rating must be 1 to 5 stars");
 
     try {
       await axios.put(
-        `http://localhost:5000/api/comments/${id}`,
+        `${API_URL}/api/comments/${id}`,
         { text: newText, rating: newRating || undefined },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -113,11 +113,11 @@ const Comments = ({ productId }) => {
     }
   };
 
-  // Delete comment
+  
   const deleteComment = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/comments/${id}`,
+        `${API_URL}/api/comments/${id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
@@ -131,7 +131,7 @@ const Comments = ({ productId }) => {
     <div className="mt-6">
       <h2 className="text-xl font-bold mb-3">Comments & Ratings</h2>
 
-      {/* Average rating stars */}
+      
       {avgRating > 0 && (
         <div className="mb-4">
           <span className="font-semibold mr-2">Average Rating:</span>
@@ -139,7 +139,7 @@ const Comments = ({ productId }) => {
         </div>
       )}
 
-      {/* Show add-comment form only if user hasn't commented yet */}
+     
       {!userComment && (
         <div className="flex flex-col gap-2 mb-6 border p-4 rounded shadow-sm">
           <textarea
