@@ -1,0 +1,12 @@
+server/.env
+client/.env
+admin/.env
+
+.env
+.env.local
+.env.development
+.env.production
+node_modules/
+
+server/config/firebaseServiceAccount.json
+
