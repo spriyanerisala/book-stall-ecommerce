@@ -48,10 +48,7 @@ const handleSubmit = async (e) => {
 
     const res = await axios.post(
       `${API_URL}/api/auth/login`,
-      form,
-      {
-        withCredentials: true,
-      }
+      form
     );
 
     const user = res.data.user;
