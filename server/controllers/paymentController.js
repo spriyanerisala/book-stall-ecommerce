@@ -71,8 +71,8 @@ export const createCheckoutSession = async (req, res) => {
         },
         quantity: item.quantity,
       })),
-      success_url: `https://book-stall-store.netlify.app/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.CLIENT_URL}/cancel`,
+      success_url: "https://book-stall-ecommerce-client.vercel.app/success?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: "https://book-stall-ecommerce-client.vercel.app/cancel",
       metadata: {
         orderId: order._id.toString(),
       },
