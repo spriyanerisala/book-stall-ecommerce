@@ -28,8 +28,8 @@ const app = express();
 app.use(
   cors({
     origin: [
-      process.env.CLIENT_URL,
-      process.env.ADMIN_URL
+       "https://book-stall-ecommerce-admin.vercel.app",
+    "https://book-stall-ecommerce-client.vercel.app"
     ],
     credentials: true
   })
