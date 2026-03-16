@@ -19,13 +19,13 @@ const Products = () => {
   });
 
   const [preview, setPreview] = useState(null);
-
+const API_URL = import.meta.env.VITE_API_URL;
  
   const fetchProducts = async () => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/admin/all-products`,
+        `${API_URL}/api/admin/all-products`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,

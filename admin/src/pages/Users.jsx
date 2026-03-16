@@ -6,10 +6,10 @@ import UserCard from "../components/UserCard";
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
-
+const API_URL = import.meta.env.VITE_API_URL;
   const fetchUsers = async () => {
     try {
-      const res = await axios.get( `${import.meta.env.VITE_API_URL}/api/admin/get-all-users`, {
+      const res = await axios.get( `${API_URL}/api/admin/get-all-users`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
         },
