@@ -6,13 +6,14 @@ import OrderCard from "../components/OrderCard";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const API_URL = import.meta.env.VITE_API_URL;
+  console.log("Backend url in admin : ",API_URL);
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem("adminToken");
       if (!token) throw new Error("No admin token found");
 
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/admin/all-orders`, {
+      const res = await axios.get(`${API_URL}/api/admin/all-orders`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

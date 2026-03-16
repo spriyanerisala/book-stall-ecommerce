@@ -13,10 +13,9 @@ const App = () => {
 
   <Routes>
 
-    {/* Admin Login Only */}
     <Route path="/admin" element={<AdminLogin />} />
 
-    {/* Admin Layout */}
+   
     <Route
       path="/*"
       element={
