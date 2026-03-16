@@ -28,12 +28,16 @@ const app = express();
 app.use(
   cors({
     origin: [
-       "https://book-stall-ecommerce-admin.vercel.app",
-    "https://book-stall-ecommerce-client.vercel.app"
+      "http://localhost:5173",
+      "https://book-stall-ecommerce-admin.vercel.app",
+      "https://book-stall-ecommerce-client.vercel.app"
     ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true
   })
 );
+
+app.options("*", cors());
 
 
 

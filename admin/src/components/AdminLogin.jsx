@@ -14,33 +14,6 @@ const AdminLogin = () => {
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
- 
-  //     const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/auth/login`, form, {
-  //       withCredentials: true, 
-  //     });
-
-  //     const user = res.data.user;
-
-  //     if (user.role === "admin") {
-  //       localStorage.setItem("adminToken", res.data.token || "fake-admin-token");
-  //       toast.success("Admin login successful");
-  //       navigate("/admin/dashboard"); // admin panel route
-  //     } else {
-  //       toast.success("Login successful");
-  //       localStorage.setItem("userToken", res.data.token || "fake-user-token");
-  //       navigate("/dashboard"); // normal user route
-  //     }
-
-  //   } catch (err) {
-  //     console.log(err);
-  //     const msg = err.response?.data?.message || "Login failed";
-  //     setError(msg);
-  //     toast.error(msg);
-  //   }
-  // };
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -59,7 +32,7 @@ const handleSubmit = async (e) => {
 
       toast.success("Admin login successful");
 
-      navigate("/admin/products");   // redirect to admin panel
+      navigate("/products");   
 
     } else {
 
