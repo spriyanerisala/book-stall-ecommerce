@@ -71,7 +71,7 @@ export const createCheckoutSession = async (req, res) => {
         },
         quantity: item.quantity,
       })),
-      success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `https://book-stall-store.netlify.app/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${process.env.CLIENT_URL}/cancel`,
       metadata: {
         orderId: order._id.toString(),
