@@ -54,9 +54,9 @@ app.use('/api/payment',paymentRouter);
 app.use('/api/admin',adminRouter);
 
 app.get('/', (req, res) => {
-  res.send("Book Stall Ecommerce API is working");
+  res.send("Welcome to Book Stall E-commerce API");
 });
-
+ 
 
 
 preloadUsersToRedis();
