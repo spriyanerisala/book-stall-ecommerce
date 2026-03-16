@@ -27,7 +27,7 @@ app.post(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin:"*",
+  origin:[process.env.CLIENT_URL,process.env.ADMIN_URL],
 
   credentials:true
 }));
